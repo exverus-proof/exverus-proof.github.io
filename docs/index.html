@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/favicon.svg">
+  <link rel="icon" href="./static/images/favicon.png">
 
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
@@ -222,18 +222,18 @@
   </div>
 </section>
 
-<section class="section" id="highlights"></section>
+<section class="section" id="highlights">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column">
         <h2 class="title is-3">Key Highlights</h2>
         <div class="content has-text-justified is-size-5">
           <ul>
-            <li>🧠 <strong>Counterexample-Guided Reasoning:</strong> ExVerus empowers LLMs to reason about program behavior by generating, validating, and generalizing counterexamples—turning proof generation into an iterative, feedback-driven process.</li>
-            <li>🔄 <strong>Three-Phase Repair Pipeline:</strong> Automates proof repair through initial proof generation, SMT-based counterexample synthesis and validation, and counterexample-guided invariant mutation.</li>
-            <li>🧩 <strong>Inductive Invariant Generalization:</strong> Converts concrete counterexamples into inductive invariants that block failures, yielding stronger and semantically grounded proofs.</li>
-            <li>🧱 <strong>ObfsBench for Robustness:</strong> Introduces ObfsBench, a 266-task obfuscated benchmark that tests semantic robustness via layout, data, and control-flow transformations.</li>
-            <li>📈 <strong>Strong Results:</strong> ExVerus outperforms state-of-the-art Verus provers by 45%, retains 90% proof success under obfuscation (vs. 33–50% for baselines), achieves 70.2% counterexample-blocking success, and cuts average token and time costs to 25% of prior methods.</li>
+            <li>🧠 <strong>Counterexample‑Guided:</strong> Makes proof search iterative by generating, validating, and generalizing counterexamples.</li>
+            <li>🔄 <strong>Three‑Phase Repair:</strong> Initial proof → SMT counterexamples → invariant mutation.</li>
+            <li>🧩 <strong>Inductive Invariants:</strong> Generalizes counterexamples into invariants that block failures.</li>
+            <li>🧱 <strong>ObfsBench Robustness:</strong> 266 obfuscated tasks covering layout, data, and control‑flow changes.</li>
+            <li>📈 <strong>Results:</strong> +45% over SOTA; 90% robust under obfuscation (vs. 33–50%); 70.2% counterexample‑blocking; ~75% lower tokens/time.</li>
           </ul>
         </div>
       </div>
@@ -524,6 +524,44 @@ fn search_recursive(a: &Vec<i32>, i: usize, j: usize, x: i32) -> (k: i32)
 </section>
 -->
 
+<!-- Motivating Example Section -->
+<section class="section has-background-light" id="motivating-example">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Motivating Examples</h2>
+    <p class="is-size-5 has-text-centered">On how ExVerus iteratively repairs proofs through counterexample feedback.</p>
+    <div class="tabs is-centered is-boxed">
+      <ul>
+        <li class="is-active" data-tab="mot1"><a>Overall Pipeline</a></li>
+        <li data-tab="mot2"><a>Generalization Details</a></li>
+      </ul>
+    </div>
+    <div class="tab-content is-active" id="mot1">
+      <div class="columns">
+        <div class="column is-10 is-offset-1">
+          <div class="content has-text-centered">
+            <p class="is-size-5">How ExVerus generates, validates and blocks counterexamples. For how ExVerus <strong>repair</strong> proofs with counterexample generalization, check <strong>Generalization Details</strong>.</p>
+            <figure class="image">
+              <img src="static/images/motivating_example.png" alt="Counterexample generation and validation workflow.">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" id="mot2">
+      <div class="columns">
+        <div class="column is-10 is-offset-1">
+          <div class="content has-text-centered">
+            <p class="is-size-5 has-text-centered">How ExVerus generalize the counterexamples for repairment through <strong>Error Triangle</strong>, Counterexample-based <strong>mutation</strong>, and <strong>validation</strong>.</p>
+            <figure class="image">
+              <img src="static/images/repair_case1.png" alt="Counterexample generalization for proof repair visual.">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Results Section -->
 <section class="section" id="performance-highlights">
   <div class="container">
@@ -541,7 +579,7 @@ fn search_recursive(a: &Vec<i32>, i: usize, j: usize, x: i32) -> (k: i32)
           <div class="content">
             <h3 class="title is-4 has-text-centered">State-of-the-Art Results</h3>
             <p class="is-size-5">
-              ExVerus achieves SOTA across all evaluated benchmarks and base models, substantially surpassing previous SOTA LLM-based provers and strong iterative refinement baselines. It attains the highest verification success rates on VerusBench and DafnyBench (up to 95.5% with O4-mini) and solves significantly more tasks on HumanEval and LCBench, underscoring its superior generality and adaptability. (Here EX, AV, IR refer to ExVerus, AutoVerus and Iterative Refinement respectively.)
+              ExVerus <strong>achieves SOTA across all</strong> evaluated benchmarks and base models, substantially surpassing previous SOTA LLM-based provers and strong iterative refinement baselines. It attains the highest verification success rates on VerusBench and DafnyBench (up to 95.5% with O4-mini) and solves significantly more tasks on HumanEval and LCBench, underscoring its superior generality and adaptability. 
             </p>
             <figure class="image">
               <img src="static/images/overview_result.png" alt="Performance Chart">
