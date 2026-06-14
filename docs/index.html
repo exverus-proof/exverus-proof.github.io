@@ -8,12 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ExVerus: Verus Proof Repair via Counterexample Reasoning</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Roboto:400,500&display=swap" rel="stylesheet">
-
   <!-- CSS Stylesheets -->
-  <!-- <link rel="stylesheet" href="plugins/line-highlight/prism-line-highlight.css" data-noprefix=""> -->
-  <!-- <link rel="stylesheet" href="plugins/diff-highlight/prism-diff-highlight.css" data-noprefix=""> -->
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
@@ -30,28 +25,114 @@
     }
   </style>
 
+  <!-- ET Book serif font (same typography as soonhokong.github.io) -->
+  <style>
+    @font-face {
+      font-family: "et-book";
+      src: url("https://cdnjs.cloudflare.com/ajax/libs/tufte-css/1.8.0/et-book/et-book-roman-line-figures/et-book-roman-line-figures.woff") format("woff");
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "et-book";
+      src: url("https://cdnjs.cloudflare.com/ajax/libs/tufte-css/1.8.0/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.woff") format("woff");
+      font-weight: normal;
+      font-style: italic;
+    }
+    @font-face {
+      font-family: "et-book";
+      src: url("https://cdnjs.cloudflare.com/ajax/libs/tufte-css/1.8.0/et-book/et-book-bold-line-figures/et-book-bold-line-figures.woff") format("woff");
+      font-weight: bold;
+      font-style: normal;
+    }
+  </style>
+
   <!-- Custom CSS -->
   <style>
     body {
-      font-family: 'Open Sans', sans-serif;
+      /* Use the reference site's serif typography ... */
+      font-family: "et-book", Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+      background-color: #ffffff;
+      color: #111;
     }
+    /* ... applied to Bulma's headings too */
+    .title, .subtitle, h1, h2, h3, h4, h5, h6 {
+      font-family: "et-book", Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+      color: #111;
+    }
+
+    /* Everything on a plain white background */
+    .hero,
+    .hero.is-light,
+    .has-background-light,
+    .section {
+      background-color: #ffffff !important;
+    }
+
     .hero {
-      background-color: #f5f5f5;
-      padding: 2rem 1.5rem;
+      padding: 2rem 1.5rem 0.5rem 1.5rem;
     }
     .hero-body {
-      padding: 3rem 1.5rem;
+      padding: 3rem 1.5rem 1rem 1.5rem;
     }
     .section {
       padding: 3rem 1.5rem;
     }
-    .title, .subtitle {
-      color: #333;
+    /* Horizontal rule between sections: a centered, fixed-width line */
+    .section + .section {
+      position: relative;
+    }
+    .section + .section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 360px;
+      max-width: 80%;
+      height: 3px;
+      background-color: #ccc;
+    }
+    /* TLDR: trim the top whitespace and frame it in a box */
+    #tldr {
+      padding-top: 0.5rem;
+    }
+    .tldr-box {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      background-color: #fafafa;
+    }
+    .tldr-box .subtitle {
+      margin-bottom: 0;
+    }
+    /* Slightly larger author names */
+    .author-list {
+      font-size: 1.4rem;
+    }
+    /* Underline author names to signal they are hyperlinks */
+    .author-list a {
+      text-decoration: underline;
     }
     .highlight {
-      background-color: #f0f0f0;
+      background-color: #ffffff;
       padding: 1rem;
       border-radius: 8px;
+    }
+    /* Key Highlights: muted monochrome icons instead of colorful emoji */
+    .highlight-list {
+      list-style: none;
+      margin-left: 0;
+    }
+    .highlight-list li {
+      padding-left: 0.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .hl-icon {
+      color: #6b7280;
+      width: 1.5rem;
+      margin-right: 0.6rem;
+      text-align: center;
     }
     .icon-box {
       text-align: center;
@@ -92,14 +173,21 @@
       width: 100%;
       height: auto;
     }
+    /* Keep the three Performance Highlights figures at a consistent height */
+    #performance-highlights .tab-content figure.image {
+      text-align: center;
+    }
+    #performance-highlights .tab-content figure.image img {
+      height: 420px;
+      width: auto;
+      max-width: 100%;
+      margin: 0 auto;
+      object-fit: contain;
+    }
     .button.is-info {
       background-color: #4A6FA5;
       color: white;
     }
-    /* .button.is-dark {
-      background-color: #2C3E50;
-      color: white;
-    } */
     .button.is-warning {
       background-color: #E67E22;
       color: white;
@@ -132,29 +220,29 @@
 <!-- Hero Section -->
 <section class="hero is-light">
   <div class="hero-body">
-    <div class="container">
-      <h1 class="title is-1 has-text-centered">ExVerus</h1>
-      <h2 class="subtitle is-3 has-text-centered"> Verus Proof Repair via Counterexample Reasoning</h2>
+    <div class="container is-max-desktop">
+      <h1 class="title is-2 has-text-centered">ExVerus: Verus Proof Repair via Counterexample Reasoning</h1>
       <div class="has-text-centered">
-        <p class="is-size-5">
-          <a href="https://people.cs.uchicago.edu/~juny/">Jun Yang</a><sup>1</sup>,
-          <a href="#">Yuechun Sun</a><sup>1</sup>,
+        <p class="is-size-5 author-list">
+          <a href="https://cs.uchicago.edu/people/jun-yang/">Jun Yang</a><sup>1</sup>,
+          <a href="https://etha-sun.github.io/">Yuechun Sun</a><sup>1</sup>,
           <a href="https://ethanyiwu.github.io/">Yi Wu</a><sup>1</sup>,
-          <a href="#">Rodrigo Caridad</a><sup>1</sup>,
+          <a href="http://rorroart.com/">Rodrigo Caridad</a><sup>1</sup>,
           <a href="https://yongweiy.github.io/">Yongwei Yuan</a><sup>2</sup>,
-          <a href="https://people.cs.uchicago.edu/~shanlu/">Shan Lu</a><sup>1</sup>,
+          <a href="https://www.eecg.utoronto.ca/~jianan/">Jianan Yao</a><sup>3</sup>,
+          <a href="https://people.cs.uchicago.edu/~shanlu/">Shan Lu</a><sup>1,4</sup>,
           <a href="https://sites.google.com/site/kexinpeisite/">Kexin Pei</a><sup>1</sup>
         </p>
-        <p class="is-size-5"><sup>1</sup>The University of Chicago</p>
-        <p class="is-size-5"><sup>2</sup>Purdue University</p>
-        <!-- <p class="is-size-5">
-          Contact: <a href="mailto:pranjala@cs.cmu.edu">pranjala@cs.cmu.edu</a>,
-          <a href="mailto:wellecks@cmu.edu">wellecks@cmu.edu</a>
-        </p> -->
+        <p class="is-size-5">
+          <sup>1</sup>The University of Chicago &nbsp;&nbsp;
+          <sup>2</sup>Purdue University &nbsp;&nbsp;
+          <sup>3</sup>University of Toronto &nbsp;&nbsp;
+          <sup>4</sup>Microsoft Research
+        </p>
         <br>
         <!-- Updated Action Buttons with new design -->
         <p class="buttons is-centered">
-          <a href="#" class="button is-dark is-rounded">
+          <a href="https://arxiv.org/pdf/2603.25810" class="button is-dark is-rounded">
             <span class="icon">
               <i class="ai ai-arxiv"></i>
             </span>
@@ -172,6 +260,10 @@
             <span class="icon"><i class="fas fa-chart-bar"></i></span>
             <span>Results</span>
           </a>
+          <a href="#citation" class="button is-dark is-rounded">
+            <span class="icon"><i class="fas fa-quote-right"></i></span>
+            <span>BibTeX</span>
+          </a>
           <a href="mailto:juny@uchicago.edu" class="button is-dark is-rounded">
             <span class="icon"><i class="fas fa-envelope"></i></span>
             <span>Contact</span>
@@ -182,15 +274,17 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="tldr">
   <div class="container is-max-desktop">
-    <h2 class="subtitle has-text-centered"><span style="font-weight:bold;">TLDR:</span> <strong>ExVerus</strong> is a <strong>counterexample-guided</strong> framework that lets LLMs use verifier feedback to refine proofs. Instead of static proof generation, it learns from failed attempts by generating and generalizing counterexamples into <strong>inductive</strong> invariants—yielding higher proof accuracy, robustness, and efficiency than prior LLM-based Verus systems.</h2>
+    <div class="tldr-box">
+      <h2 class="subtitle has-text-centered"><span style="font-weight:bold;">TLDR:</span> <strong>ExVerus</strong> is a <strong>counterexample-guided</strong> framework that lets LLMs use verifier feedback to refine proofs. Instead of static proof generation, it learns from failed attempts by generating and generalizing counterexamples into <strong>inductive</strong> invariants—yielding higher proof accuracy, robustness, and efficiency than prior LLM-based Verus systems.</h2>
+    </div>
   </div>
 </section>
 
 <!-- Introduction Section -->
 <section class="section">
-  <div class="container">
+  <div class="container is-max-desktop">
     <div class="content">
       <h2 class="title is-3 has-text-centered">Why Counterexample-Guided Formal Proof Generation?</h2>
       <p class="is-size-5">
@@ -202,11 +296,11 @@
 
 <!-- Solution Section -->
 <section class="section has-background-light">
-  <div class="container">
+  <div class="container is-max-desktop">
     <h2 class="title is-3 has-text-centered">Overview of ExVerus</h2>
     <!-- Image/Diagram -->
     <figure class="image">
-      <img src="static/images/workflow.png" alt="ExVerus Framework Diagram" class="diagram">
+      <img src="static/images/workflow.jpg" alt="ExVerus Framework Diagram" class="diagram">
     </figure>
     <div class="content">
       <p class="is-size-5">
@@ -235,11 +329,11 @@
     </div>
     <div class="tab-content is-active" id="mot1">
       <div class="columns">
-        <div class="column is-10 is-offset-1">
+        <div class="column is-20">
           <div class="content has-text-centered">
             <p class="is-size-5">How ExVerus generates, validates and blocks counterexamples. For details of step 3:CEX-guided proof repair, check <strong>Generalization Details</strong>.</p>
             <figure class="image">
-              <img src="static/images/motivating_example.png" alt="Counterexample generation and validation workflow.">
+              <img src="static/images/motivating_example.jpg" alt="Counterexample generation and validation workflow.">
             </figure>
           </div>
         </div>
@@ -251,7 +345,7 @@
           <div class="content has-text-centered">
             <p class="is-size-5 has-text-centered">How ExVerus' CEX-guided proof repair works through <strong>Error Triangle</strong>, Counterexample-based <strong>mutation</strong>, and <strong>validation</strong>.</p>
             <figure class="image">
-              <img src="static/images/repair_case1.png" alt="Counterexample generalization for proof repair visual.">
+              <img src="static/images/repair_case1.jpg" alt="Counterexample generalization for proof repair visual.">
             </figure>
           </div>
         </div>
@@ -266,12 +360,12 @@
       <div class="column">
         <h2 class="title is-3">Key Highlights</h2>
         <div class="content has-text-justified is-size-5">
-          <ul>
-            <li>🧠 <strong>Counterexample‑Guided:</strong> Makes proof search iterative by generating, validating, and generalizing counterexamples.</li>
-            <li>🔄 <strong>Three‑Phase Repair:</strong> Initial proof → SMT counterexamples → invariant mutation.</li>
-            <li>🧩 <strong>Inductive Invariants:</strong> Generalizes counterexamples into invariants that block failures.</li>
-            <li>🧱 <strong>ObfsBench Robustness:</strong> 266 obfuscated tasks covering layout, data, and control‑flow changes.</li>
-            <li>📈 <strong>Results:</strong> +45% over SOTA; 90% robust under obfuscation (vs. 33–50%); 70.2% counterexample‑blocking; ~75% lower tokens/time.</li>
+          <ul class="highlight-list">
+            <li><i class="fas fa-brain hl-icon"></i> <strong>Counterexample‑Guided:</strong> Makes proof search iterative by generating, validating, and generalizing counterexamples.</li>
+            <li><i class="fas fa-sync-alt hl-icon"></i> <strong>Three‑Phase Repair:</strong> Initial proof → SMT counterexamples → invariant mutation.</li>
+            <li><i class="fas fa-puzzle-piece hl-icon"></i> <strong>Inductive Invariants:</strong> Generalizes counterexamples into invariants that block failures.</li>
+            <li><i class="fas fa-shield-alt hl-icon"></i> <strong>ObfsBench Robustness:</strong> 266 obfuscated tasks covering layout, data, and control‑flow changes.</li>
+            <li><i class="fas fa-chart-line hl-icon"></i> <strong>Results:</strong> +45% over SOTA; 90% robust under obfuscation (vs. 33–50%); 70.2% counterexample‑blocking; ~75% lower tokens/time.</li>
           </ul>
         </div>
       </div>
@@ -281,7 +375,7 @@
 
 <!-- Results Section -->
 <section class="section" id="performance-highlights">
-  <div class="container">
+  <div class="container is-max-desktop">
     <h2 class="title is-3 has-text-centered">Performance Highlights</h2>
     <div class="tabs is-centered is-boxed">
       <ul>
@@ -296,10 +390,10 @@
           <div class="content">
             <h3 class="title is-4 has-text-centered">State-of-the-Art Results</h3>
             <p class="is-size-5">
-              ExVerus <strong>achieves SOTA across all</strong> evaluated benchmarks and base models, substantially surpassing previous SOTA LLM-based provers and strong iterative refinement baselines. It attains the highest verification success rates on VerusBench and DafnyBench (up to 95.5% with O4-mini) and solves significantly more tasks on HumanEval and LCBench, underscoring its superior generality and adaptability. 
+              ExVerus <strong>performs impressively across all</strong> evaluated benchmarks and base models, substantially surpassing previous SOTA LLM-based provers and strong iterative refinement baselines. It attains the highest verification success rates on VerusBench and DafnyBench (up to 95.5% with o4-mini) and solves significantly more tasks on HumanEval and LCBench, underscoring its superior generality and adaptability.
             </p>
             <figure class="image">
-              <img src="static/images/overview_result.png" alt="Performance Chart">
+              <img src="static/images/overview_result.jpg" alt="Performance Chart">
             </figure>
           </div>
         </div>
@@ -315,7 +409,7 @@
             </p>
             <!-- Add relevant figure here -->
             <figure class="image">
-              <img src="static/images/robustness.png" alt="Exceptional Robustness">
+              <img src="static/images/robustness.jpg" alt="Exceptional Robustness">
             </figure>
           </div>
         </div>
@@ -330,7 +424,7 @@
               ExVerus significantly reduces token consumption compared to prior methods: around <strong>75%</strong> fewer tokens than AutoVerus on DeepSeek and around <strong>25%</strong> fewer tokens than AutoVerus on GPT-4o.
             <!-- Add relevant figure here -->
             <figure class="image">
-              <img src="static/images/token_consumption.png" alt="Superior Efficiency">
+              <img src="static/images/token_consumption.jpg" alt="Superior Efficiency">
             </figure>
           </div>
         </div>
@@ -339,72 +433,22 @@
   </div>
 </section>
 
-<!-- <section class="section" id="Cite AlphaVerus">
+<section class="section" id="citation">
   <div class="container is-max-desktop content">
     <h2 class="title is-3">BibTeX</h2>
-    <pre><code>@misc{aggarwal2024alphaverusbootstrappingformallyverified,
-      title={AlphaVerus: Bootstrapping Formally Verified Code Generation through Self-Improving Translation and Treefinement}, 
-      author={Pranjal Aggarwal and Bryan Parno and Sean Welleck},
-      year={2024},
-      eprint={2412.06176},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG},
-      url={https://arxiv.org/abs/2412.06176}, 
+    <pre><code>@inproceedings{
+yang2026exverus,
+title={ExVerus: Verus Proof Repair via Counterexample Reasoning},
+author={Jun Yang and Yuechun Sun and Yi Wu and Rodrigo Caridad and Yongwei Yuan and Jianan Yao and Shan Lu and Kexin Pei},
+booktitle={Forty-third International Conference on Machine Learning},
+year={2026},
+url={https://openreview.net/forum?id=FNDkXA0OUJ}
 }</code></pre>
   </div>
-</section> -->
-<!-- Get Started Section -->
-<!-- <section class="section has-background-light" id="get-started">
-  <div class="container">
-    <h2 class="title is-3 has-text-centered">Get Started with AlphaVerus</h2>
-    <div class="content">
-      <p class="is-size-5 has-text-centered">Using AlphaVerus in your projects is straightforward:</p>
-      <div class="box">
-        <p><strong>1. Install the package:</strong></p>
-        <pre><code class="language-shell">$ pip install alphaverus</code></pre>
-      </div>
-      <div class="box">
-        <p><strong>2. Import and initialize:</strong></p>
-        <pre><code class="language-python">from alphaverus import AlphaVerus
-
-model = AlphaVerus()</code></pre>
-      </div>
-      <div class="box">
-        <p><strong>3. Generate verified code:</strong></p>
-        <pre><code class="language-python">specification = "..."
-verified_code = model.generate(specification)
-print(verified_code)</code></pre>
-      </div>
-      <p class="is-size-5 has-text-centered">
-        For more details, check out our <a href="https://github.com/AlphaVerus/AlphaVerus">GitHub repository</a>.
-      </p>
-    </div>
-  </div>
-</section> -->
+</section>
 
 <!-- Footer -->
 <footer class="footer">
-  <!-- <div class="content has-text-centered">
-    <p>
-      <strong>AlphaVerus</strong> by <a href="https://pranjal2041.github.io">Pranjal Aggarwal</a>, <a href="https://www.andrew.cmu.edu/user/bparno/">Bryan Parno</a>, and <a href="https://wellecks.com//">Sean Welleck</a>.
-    </p>
-    <p>
-      <a href="https://arxiv.org/abs/2412.06176" class="icon">
-        <i class="fas fa-file-alt"></i>
-      </a>
-      &nbsp;
-      <a href="https://github.com/cmu-l3/alphaverus" class="icon">
-        <i class="fab fa-github"></i>
-      </a>
-    </p>
-    <br>
-    <br>
-    <p>
-      Template adapted from <a href="http://nerfies.github.io/">Nerfies</a> by Keunhong Park et
-      al.
-      and uses <a href="https://bulma.io/">Bulma</a>.
-    </p>
-  </div> -->
 </footer>
 
 <!-- JavaScript for Tabs -->
@@ -412,17 +456,17 @@ print(verified_code)</code></pre>
   document.addEventListener('DOMContentLoaded', () => {
     // Get all tab sections
     const tabSections = document.querySelectorAll('.tabs');
-    
+
     tabSections.forEach(tabSection => {
       // For each tab section, set first tab as active
       const firstTab = tabSection.querySelector('ul li');
       const allTabs = tabSection.querySelectorAll('ul li');
       const targetId = firstTab.dataset.tab;
       const tabContents = tabSection.closest('.container').querySelectorAll('.tab-content');
-      
+
       // Set first tab as active
       firstTab.classList.add('is-active');
-      
+
       // Set corresponding content as active
       tabContents.forEach(content => {
         if (content.id === targetId) {
