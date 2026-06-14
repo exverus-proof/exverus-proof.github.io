@@ -1,0 +1,36 @@
+# ExVerus
+
+> ExVerus is a counterexample-guided proof-repair framework for Verus that lets large
+> language models use verifier feedback to iteratively refine formal proofs. Instead of
+> static, end-to-end proof generation, ExVerus learns from failed attempts by generating,
+> validating, and generalizing SMT-based counterexamples into inductive loop invariants.
+
+**Paper:** ExVerus: Verus Proof Repair via Counterexample Reasoning (ICML 2026)
+**Authors:** Jun Yang, Yuechun Sun, Yi Wu, Rodrigo Caridad (University of Chicago);
+Yongwei Yuan (Purdue University); Jianan Yao (University of Toronto);
+Shan Lu (University of Chicago, Microsoft Research); Kexin Pei (University of Chicago).
+
+## How ExVerus works
+
+ExVerus transforms static proof generation into an iterative reasoning process with three phases:
+
+1. **Initial Generation** — produce an initial proof with a baseline LLM prompt; failed proofs trigger repair.
+2. **Counterexample Generation** — generate and validate SMT-based counterexamples that reveal real invariant failures.
+3. **Generalization & Repair** — classify errors, mutate invariants to block the counterexamples, and select the best repair via blocking validation.
+
+## Key results
+
+- State-of-the-art verification success on VerusBench and DafnyBench (up to 95.5% with O4-mini); solves more tasks on HumanEval and LCBench. Roughly +45% over prior SOTA.
+- Robustness: on ObfsBench (266 obfuscated Verus tasks covering layout, data, and control-flow changes), 90% of ExVerus-verified proofs remain verifiable, vs. 33%–50% for AutoVerus.
+- Efficiency: ~75% fewer tokens than AutoVerus on DeepSeek and ~25% fewer on GPT-4o.
+
+## Links
+
+- Website: https://exverus-proof.github.io/
+- Paper (PDF): https://arxiv.org/pdf/2603.25810
+- OpenReview: https://openreview.net/forum?id=FNDkXA0OUJ
+
+## Topics
+
+formal verification, Verus, Rust, large language models, automated proof repair,
+counterexample-guided invariant synthesis, inductive loop invariants, SMT solving, code generation
